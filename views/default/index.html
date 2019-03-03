@@ -1,0 +1,70 @@
+{{extend 'defaultLayout.html'}}
+
+<h2>Biblioteca</h2>
+
+<div class="row">
+
+    {{for juego in data[0]:}}
+        <div class="col-sm-4">
+            <div class="card text-right mb-3" style="width: 18rem;">
+                <img src="{{=URL('download', args=juego.portada)}}" class="card-img-top" alt="...">
+                <div class="card-body">
+                    <h5 class="card-title">{{=juego.nombre}}</h5>
+                    <p class="card-text">{{=juego.descripcion}}</p>
+                    <a href="#" data-id="{{=juego.id}}" data-url="{{=URL('static', juego.url)}}" class="card-link" data-toggle="modal" data-target="#formSeleccionJugadorModalCenter">Jugar</a>
+                </div>
+            </div>
+        </div>
+    {{pass}}
+
+</div>
+
+<div class="modal fade" id="formSeleccionJugadorModalCenter" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalCenterTitle">Seleccionar Jugador</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div id="resultado"></div>
+                <form id="formSeleccionJugador">
+                    <div class="form-group">
+                        <select class="custom-select custom-select-lg mb-3" name="jugador" id="jugador">
+                            <option selected>Seleccionar jugador</option>
+                            {{for jugador in data[1]:}}
+                            <option value={{=jugador.id}}>{{=jugador.nick}}</option>
+                            {{pass}}
+                        </select>
+                    </div>
+                    <input type="hidden" id="juego" name="juego" value="">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="submitFormSeleccionJugador">Seleccionar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+juego_url = '';
+
+jQuery('.card-link').click(function() {
+    jQuery('#juego').val(jQuery(this).data( "id" ));
+    juego_url = jQuery(this).data( "url" );
+});
+
+jQuery('#submitFormSeleccionJugador').click(function() {
+  ajax('{{=URL('seleccionJugador')}}',
+       ['juego','jugador']);
+  jQuery('#formSeleccionJugadorModalCenter').modal('toggle');
+  window.open(juego_url, '_blank');
+  return false;
+});
+
+</script>

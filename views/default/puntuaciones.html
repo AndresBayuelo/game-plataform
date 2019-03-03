@@ -1,0 +1,32 @@
+{{extend 'defaultLayout.html'}}
+
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <div class="card">
+            <h3 class="card-header">Puntuaciones</h3>
+            <div class="card-body">
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th scope="col">Juego</th>
+                            <th scope="col">Jugador</th>
+                            <th scope="col">Puntaje</th>
+                            <th scope="col">Fecha</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{for puntuacion in puntuaciones:}}
+                        <tr>
+                            <td>{{=puntuacion.juego.nombre}}</td>
+                            <td>{{=puntuacion.jugador.nick}}</td>
+                            <td>{{=puntuacion.puntaje.puntos}}</td>
+                            <td>{{=puntuacion.puntaje.fecha}}</td>
+                        </tr>
+                        {{pass}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
