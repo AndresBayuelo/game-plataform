@@ -17,7 +17,7 @@ def jugadores():
 def agregarJugador():
     form = SQLFORM(db.jugador)
     if form.accepts(request, formname=None):
-        return DIV("Juagador registrado!", _class="alert alert-success")
+        return DIV("Jugador registrado!", _class="alert alert-success")
     elif form.errors:
         return DIV(*[(campo, valor) for campo, valor in form.errors.items()], _class="alert alert-danger")
 
